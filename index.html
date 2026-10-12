@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ขอโทษนะเต้ 🧡</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow: hidden;
+            font-family: sans-serif;
+            background: linear-gradient(
+                135deg,
+                #ffb36b,
+                #ff8fa3,
+                #ffc6e0
+            );
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* กล่องข้อความ */
+        .card {
+            position: relative;
+            z-index: 10;
+            width: min(90%, 450px);
+            padding: 35px 25px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 30px;
+            box-shadow: 0 15px 40px #8c3c4b40;
+            animation: appear 1s ease;
+        }
+
+        h1 {
+            color: #ff6b35;
+            font-size: 2.3rem;
+            margin-bottom: 15px;
+        }
+
+        .main-cat {
+            font-size: 75px;
+            animation: wiggle 1s infinite alternate;
+        }
+
+        p {
+            color: #5d4141;
+            font-size: 17px;
+            line-height: 1.8;
+            margin: 12px 0;
+        }
+
+        .small {
+            font-size: 13px;
+            color: #999;
+        }
+
+        button {
+            border: none;
+            padding: 14px 22px;
+            margin: 8px 4px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.08);
+        }
+
+        .forgive {
+            background: #ff773d;
+            color: white;
+            box-shadow: 0 5px 0 #d95725;
+        }
+
+        .angry {
+            background: #eee;
+            color: #555;
+        }
+
+        #result {
+            color: #ff6b35;
+            font-weight: bold;
+            min-height: 30px;
+        }
+
+        /* แมวส้มที่เด้งไปมา */
+        .cat {
+            position: fixed;
+            z-index: 2;
+            font-size: 48px;
+            user-select: none;
+            pointer-events: none;
+            filter: drop-shadow(0 5px 3px #0002);
+            animation: bounce var(--speed) ease-in-out infinite alternate;
+        }
+
+        .cat:nth-of-type(1) {
+            --speed: 1.2s;
+        }
+
+        @keyframes bounce {
+            0% {
+                transform: translateY(0) rotate(-15deg);
+            }
+            100% {
+                transform: translateY(-100px) rotate(15deg);
+            }
+        }
+
+        @keyframes wiggle {
+            from {
+                transform: rotate(-8deg);
+            }
+            to {
+                transform: rotate(8deg);
+            }
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: scale(0.7);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .heart {
+            position: fixed;
+            z-index: 20;
+            pointer-events: none;
+            animation: fly 1.5s ease-out forwards;
+            font-size: 30px;
+        }
+
+        @keyframes fly {
+            from {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(-180px) scale(1.8);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- แมวส้ม 5 ตัว -->
+    <div class="cat" style="left: 5%; top: 15%;">🐈</div>
+    <div class="cat" style="left: 80%; top: 12%;">🐈</div>
+    <div class="cat" style="left: 12%; top: 75%;">🐈</div>
+    <div class="cat" style="left: 82%; top: 72%;">🐈</div>
+    <div class="cat" style="left: 47%; top: 85%;">🐈</div>
+
+    <!-- กล่องขอโทษ -->
+    <main class="card">
+        <div class="main-cat">😿</div>
+
+        <h1>เต้จ๋าาา 🧡</h1>
+
+        <p>
+            เรามีเรื่องจะสารภาพ...<br>
+            คือว่า...
+        </p>
+
+        <p>
+            <strong>เราขอโทษนะเต้ 🥹</strong><br>
+            อย่าเพิ่งเอาเราไปทำเป็นหมูกระทะเลย
+        </p>
+
+        <p>
+            เราสำนึกผิดแล้ว 0.0001%<br>
+            ที่เหลือกำลังโหลด...
+        </p>
+
+        <p class="small">
+            🐈 แมวส้มทั้ง 5 ตัวเป็นพยาน 🐈
+        </p>
+
+        <button class="forgive" onclick="forgive()">
+            ยกโทษให้ก็ได้ 💖
+        </button>
+
+        <button class="angry" onclick="angry()">
+            ไม่ยกโทษ 😡
+        </button>
+
+        <p id="result"></p>
+    </main>
+
+    <script>
+        // ทำให้แมวแต่ละตัวเด้งไม่พร้อมกัน
+        const cats = document.querySelectorAll(".cat");
+
+        cats.forEach((cat, index) => {
+            cat.style.animationDelay = `${index * 0.25}s`;
+            cat.style.setProperty(
+                "--speed",
+                `${0.8 + Math.random() * 1.2}s`
+            );
+        });
+
+        // เมื่อเต้ยกโทษให้
+        function forgive() {
+            document.getElementById("result").textContent =
+                "เย้!! เต้ใจดีที่สุดในจักรวาล 🥹💖";
+
+            document.querySelector(".main-cat").textContent = "😻";
+
+            for (let i = 0; i < 25; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement("div");
+
+                    heart.className = "heart";
+                    heart.textContent = ["💖", "🧡", "💕", "🐾"][
+                        Math.floor(Math.random() * 4)
+                    ];
+
+                    heart.style.left = Math.random() * 100 + "vw";
+                    heart.style.top = Math.random() * 100 + "vh";
+
+                    document.body.appendChild(heart);
+
+                    setTimeout(() => heart.remove(), 1600);
+                }, i * 50);
+            }
+        }
+
+        // เมื่อเต้กดไม่ยกโทษ
+        function angry() {
+            document.getElementById("result").textContent =
+                "โอ๊ยยย เต้ใจเย็นก่อนนน 😭";
+
+            document.querySelector(".main-cat").textContent = "🙀";
+
+            cats.forEach(cat => {
+                cat.style.animationDuration = "0.25s";
+            });
+
+            setTimeout(() => {
+                cats.forEach(cat => {
+                    cat.style.animationDuration =
+                        `${0.8 + Math.random() * 1.2}s`;
+                });
+            }, 2000);
+        }
+    </script>
+
+</body>
+</html>
